@@ -129,7 +129,7 @@ class Product extends Model
         'minimum_stock_level',
         'maximum_stock_level',
         'created_by',
-        'user_id',  // Add this line
+        'user_id',
         'status',
         'stock_quantity',
         'expiry_date'
@@ -152,7 +152,7 @@ class Product extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class); // Add this relationship
+        return $this->belongsTo(User::class);
     }
 
     public function inventoryTransactions()
@@ -212,16 +212,12 @@ class Product extends Model
         parent::boot();
 
         static::creating(function ($product) {
-            // If no category is set, use the first category or create a default
             if (!$product->category_id) {
                 $defaultCategory = Category::firstOrCreate([
                     'name' => 'Uncategorized'
                 ]);
                 $product->category_id = $defaultCategory->id;
             }
-
-            // Set the user_id to the currently authenticated user
-            // $product->user_id = auth()->id();
         });
     }
 }

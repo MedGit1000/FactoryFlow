@@ -140,16 +140,16 @@
                                     <a class="nav-link {{ request()->routeIs('inventory*') ? 'active' : '' }}"
                                         href="{{ route('inventory.index') }}"><i
                                             class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
-                                        Stock</a>
+                                        Products</a>
                                 </li>
                                 <li>
                                     <a class="nav-link {{ request()->routeIs('production*') ? 'active' : '' }}"
                                         href="{{ route('production.index') }}"><i
                                             class="ri-circle-fill circle-icon text-warning-main w-auto"></i>
-                                        Production</a>
+                                        Production Line</a>
                                 </li>
                                 <li>
-                                    <a href="index-3.html"><i
+                                    <a href="{{ route('orders.index') }}"><i
                                             class="ri-circle-fill circle-icon text-info-main w-auto"></i>
                                         Orders</a>
                                 </li>
@@ -159,25 +159,12 @@
                                             class="ri-circle-fill circle-icon text-danger-main w-auto"></i>
                                         Employees</a>
                                 </li>
-                                <li>
-                                    <a href="index-5.html"><i
-                                            class="ri-circle-fill circle-icon text-success-main w-auto"></i>
-                                        Investment</a>
-                                </li>
-                                <li>
-                                    <a href="index-6.html"><i class="ri-circle-fill circle-icon text-purple w-auto"></i>
-                                        LMS</a>
-                                </li>
-                                <li>
-                                    <a href="index-7.html"><i
-                                            class="ri-circle-fill circle-icon text-info-main w-auto"></i> NFT
-                                        & Gaming</a>
-                                </li>
+
                             </ul>
                         </li>
-                        <li class="sidebar-menu-group-title">Application</li>
+                        {{-- <li class="sidebar-menu-group-title">Application</li>
                         <li>
-                            <a href="email.html">
+                            <a href="#">
                                 <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
                                 <span>Email</span>
                             </a>
@@ -225,8 +212,8 @@
                                             class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="dropdown">
+                        </li> --}}
+                        {{-- <li class="dropdown">
                             <a href="javascript:void(0)">
                                 <i class="ri-robot-2-line"></i>
                                 <span>Ai Application</span>
@@ -258,9 +245,9 @@
                                         Generator</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li class="dropdown">
+                        {{-- <li class="dropdown">
                             <a href="javascript:void(0)">
                                 <i class="ri-robot-2-line"></i>
                                 <span>Crypto Currency</span>
@@ -288,9 +275,9 @@
                                         Portfolios</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li class="sidebar-menu-group-title">UI Elements</li>
+                        {{-- <li class="sidebar-menu-group-title">UI Elements</li>
 
                         <li class="dropdown">
                             <a href="javascript:void(0)">
@@ -577,14 +564,31 @@
                                 <iconify-icon icon="octicon:info-24" class="menu-icon"></iconify-icon>
                                 <span>Terms & Conditions</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="dropdown">
                             <a href="javascript:void(0)">
                                 <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
                                 <span>Settings</span>
                             </a>
                             <ul class="sidebar-submenu">
+                                <li><a href="{{ route('profile.edit') }}"><i
+                                            class="ri-circle-fill circle-icon text-danger-600 w-auto"></i>
+                                        Profile</a></li>
+
                                 <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+
+                                        <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                            <img src="{{ asset('homepage/img/logout.png') }}" alt="Logout"
+                                                class="logout-icon" width="16px" height="16px">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </li>
+                                {{-- <li>
                                     <a href="company.html"><i
                                             class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
                                         Company</a>
@@ -618,7 +622,7 @@
                                     <a href="payment-gateway.html"><i
                                             class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Payment
                                         Gateway</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                     </ul>

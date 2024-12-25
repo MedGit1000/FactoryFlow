@@ -418,7 +418,7 @@
                                                  <div class="invalid-feedback">{{ $message }}</div>
                                              @enderror
                                          </div>
-                                         <div class="form-text text-muted">
+                                         <div class="form-text text-white">
                                              Accepted formats: JPG, PNG, GIF (Max 2MB)
                                          </div>
                                      </div>

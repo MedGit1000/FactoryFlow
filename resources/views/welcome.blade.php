@@ -1237,6 +1237,9 @@
 </head>
 
 <body class="index-page">
+    <div id="preloader">
+        <img src="{{ asset('homepage/img/Loader.gif') }}" alt="Loading...">
+    </div>
 
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
@@ -1272,14 +1275,14 @@
             <div class="container text-center">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <h1 data-aos="fade-up">Weclcome to <span>FactoryFlow</span></h1>
-                    <p data-aos="fade-up" data-aos-delay="100">Quickly manage your project now and set the stage for
+                    <p data-aos="fade-up" data-aos-delay="10">Quickly manage your project now and set the stage for
                         success<br></p>
                     <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
                         <a href="{{ route('register') }}" class="btn-get-started">Get Started</a>
 
                     </div>
-                    <img src="{{ asset('homepage/img/R (1).png') }}" class="img-fluid hero-img"
-                        alt="Hero Services Image" data-aos="zoom-out" data-aos-delay="300">
+                    <img src="{{ asset('homepage/img/fm.svg') }}" class="img-fluid hero-img" alt="Hero Services Image"
+                        data-aos="zoom-out" data-aos-delay="300">
                 </div>
             </div>
 
@@ -1842,11 +1845,11 @@
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© 2024<span>Copyright</span> <strong class="px-1 sitename">FactoryFlow</strong><span>All Rights
+            <p>© <span>Copyright 2025</span> <strong class="px-1 sitename">FactoryFlow</strong><span>All Rights
                     Reserved</span></p>
             <div class="credits">
 
-                Designed by <a>Me</a> Dist<a>and Her
+                Designed by <a>Me</a> <a>and Her
             </div>
         </div>
 
@@ -1857,7 +1860,7 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
+
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('homepage/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

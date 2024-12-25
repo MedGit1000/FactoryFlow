@@ -29,7 +29,7 @@ class ProfileController extends Controller
                 'email',
                 Rule::unique('users')->ignore($user->id)
             ],
-            'avatar' => 'nullable|image|max:2048', // Optional image upload
+            'image' => 'nullable|image|max:2048', // Optional image upload
             'phone' => 'nullable|string|max:20',
             'bio' => 'nullable|string|max:500'
         ]);
@@ -39,19 +39,20 @@ class ProfileController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
+            'image' => $request->input('image'),
             'bio' => $request->input('bio')
         ]);
 
-        // Handle avatar upload
-        if ($request->hasFile('avatar')) {
-            // Delete old avatar if exists
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
             }
 
-            // Store new avatar
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
-            $user->avatar = $avatarPath;
+            // Store new image
+            $imagePath = $request->file('image')->store('images', 'public');
+            $user->image = $imagePath;
         }
 
         // Save the user

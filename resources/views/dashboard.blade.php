@@ -701,26 +701,15 @@
                 <div class="card shadow-none border bg-gradient-start-1 h-100">
                     <div class="card-body p-20">
                         <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-                            {{-- <div>
+                            <div>
                                 <p class="fw-medium text-primary-light mb-1">Total Users</p>
-                                @if ($totalUsers > 0)
+                                @if (!empty($totalUsers))
                                     <h6 class="mb-0">{{ number_format($totalUsers) }}</h6>
                                 @else
                                     <h6 class="mb-0 text-muted">No users found</h6>
                                 @endif
-                            </div> --}}
-                            <div>
-                                @if (empty($users))
-                                    <p>No users found.</p>
-                                @else
-                                    <h3>Total Users: {{ $users->count() }}</h3>
-                                    <ul>
-                                        @foreach ($users as $user)
-                                            <li>{{ $user->name }} ({{ $user->email }})</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
                             </div>
+
                             <div
                                 class="w-50-px h-50-px bg-cyan rounded-circle d-flex justify-content-center align-items-center">
                                 <iconify-icon icon="gridicons:multiple-users"
@@ -729,7 +718,7 @@
                         </div>
                         <p class="fw-medium text-sm text-primary-light mt-12 mb-0 d-flex align-items-center gap-2">
                             <span class="d-inline-flex align-items-center gap-1 text-success-main"><iconify-icon
-                                    icon="bxs:up-arrow" class="text-xs"></iconify-icon> +5000</span>
+                                    icon="bxs:up-arrow" class="text-xs"></iconify-icon> {{ $totalUsers + 10 }}%</span>
                             Last 30 days users
                         </p>
                     </div>
@@ -920,7 +909,7 @@
                                     <button class="nav-link d-flex align-items-center active" id="pills-to-do-list-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-to-do-list" type="button"
                                         role="tab" aria-controls="pills-to-do-list" aria-selected="true">
-                                        Latest Registered
+                                        Latest Users
                                         <span
                                             class="text-sm fw-semibold py-6 px-12 bg-neutral-500 rounded-pill text-white line-height-1 ms-12 notification-alert">35</span>
                                     </button>
@@ -930,7 +919,7 @@
                                         data-bs-toggle="pill" data-bs-target="#pills-recent-leads" type="button"
                                         role="tab" aria-controls="pills-recent-leads" aria-selected="false"
                                         tabindex="-1">
-                                        Latest Subscribe
+                                        Latest Products
                                         <span
                                             class="text-sm fw-semibold py-6 px-12 bg-neutral-500 rounded-pill text-white line-height-1 ms-12 notification-alert">35</span>
                                     </button>
@@ -952,111 +941,59 @@
                                             <tr>
                                                 <th scope="col">Users </th>
                                                 <th scope="col">Registered On</th>
-                                                <th scope="col">Plan</th>
+                                                <th scope="col">Role</th>
                                                 <th scope="col" class="text-center">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user1.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Dianne Russell</h6>
+                                            @if (!empty($users))
+                                                @foreach ($users as $user)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                @if ($user->image)
+                                                                    <div class="product-image"
+                                                                        style="
+                                            width: 80px;
+                                            height: 80px;
+                                            background-image: url('{{ Storage::url($user->image) }}');
+                                            background-size: cover;
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            border-radius: 8px;
+                                        ">
+                                                                    </div>
+                                                                @else
+                                                                    <div class="product-image-placeholder"
+                                                                        style="
+                                            width: 80px;
+                                            height: 80px;
+                                            background-image: url('{{ asset('homepage/img/profil.png') }}');
+                                            background-size: cover;
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            border-radius: 8px;
+                                        ">
+
+                                                                    </div>
+                                                                @endif
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="text-md mb-0 fw-medium">{{ $user->name }}
+                                                                    </h6>
+                                                                    <span
+                                                                        class="text-sm text-secondary-light fw-medium">{{ $user->email }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ $user->created_at }}</td>
+                                                        <td>{{ $user->role }}</td>
+                                                        <td class="text-center">
                                                             <span
-                                                                class="text-sm text-secondary-light fw-medium">redaniel@gmail.com</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Free</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user2.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Wade Warren</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">xterris@gmail.com</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Basic</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user3.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Albert Flores</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">seannand@mail.ru</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Standard</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user4.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Bessie Cooper </h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">igerrin@gmail.com</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Business</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user5.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Arlene McCoy</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">fellora@mail.ru</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Enterprise </td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
+                                                                class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -1067,115 +1004,103 @@
                                     <table class="table bordered-table sm-table mb-0">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Users </th>
-                                                <th scope="col">Registered On</th>
-                                                <th scope="col">Plan</th>
-                                                <th scope="col" class="text-center">Status</th>
+                                                <th>&nbsp;</th>
+                                                <th>ID</th>
+                                                <th>Image</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total Value</th>
+                                                <th>Actions</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user1.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Dianne Russell</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">redaniel@gmail.com</span>
+                                            @forelse($products as $product)
+                                                <tr class="alert" role="alert">
+                                                    <td>
+                                                        <label class="checkbox-wrap checkbox-primary">
+                                                            <input type="checkbox">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>{{ $product->id }}</td>
+                                                    <td>
+                                                        @if ($product->image)
+                                                            <div class="product-image"
+                                                                style="
+                                            width: 80px;
+                                            height: 80px;
+                                            background-image: url('{{ Storage::url($product->image) }}');
+                                            background-size: cover;
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            border-radius: 8px;
+                                        ">
+                                                            </div>
+                                                        @else
+                                                            <div class="product-image-placeholder"
+                                                                style="
+                                            width: 80px;
+                                            height: 80px;
+                                            background-color: #e9ecef;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            border-radius: 8px;
+                                        ">
+                                                                <i class="fas fa-image text-muted"></i>
+                                                            </div>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="product-details">
+                                                            <span class="d-block">{{ $product->name }}</span>
+                                                            <small
+                                                                class="text-">{{ Str::limit($product->description, 50) }}</small>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Free</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user2.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Wade Warren</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">xterris@gmail.com</span>
+                                                    </td>
+                                                    <td>${{ number_format($product->price, 2) }}</td>
+                                                    <td class="quantity">
+                                                        <div class="input-group">
+                                                            <input type="number" name="quantity"
+                                                                class="quantity form-control input-number"
+                                                                value="{{ $product->stock_quantity }}" min="0"
+                                                                max="1000">
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Basic</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user3.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Albert Flores</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">seannand@mail.ru</span>
+                                                    </td>
+                                                    <td>${{ number_format($product->price * $product->stock_quantity, 2) }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('inventory.edit', $product) }}"
+                                                                class="btn btn-sm btn-warning">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <form action="{{ route('inventory.destroy', $product) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Are you sure?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Standard</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user4.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Bessie Cooper </h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">igerrin@gmail.com</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Business</td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="{{ asset('') }}/images/users/user5.png"
-                                                            alt=""
-                                                            class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-md mb-0 fw-medium">Arlene McCoy</h6>
-                                                            <span
-                                                                class="text-sm text-secondary-light fw-medium">fellora@mail.ru</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>27 Mar 2024</td>
-                                                <td>Enterprise </td>
-                                                <td class="text-center">
-                                                    <span
-                                                        class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7" class="text-center py-4">
+                                                        <p class="text-muted">No products found</p>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="card-footer">
+                                    {{ $products->links() }}
                                 </div>
                             </div>
                         </div>
@@ -1184,92 +1109,106 @@
             </div>
             <div class="col-xxl-3 col-xl-12">
                 <div class="card h-100">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                            <h6 class="mb-2 fw-bold text-lg mb-0">Top Performer</h6>
-                            <a href="javascript:void(0)"
-                                class="text-primary-600 hover-text-primary d-flex align-items-center gap-1">
-                                View All
-                                <iconify-icon icon="solar:alt-arrow-right-linear" class="icon"></iconify-icon>
-                            </a>
+                    <div class="col-12">
+                        <h1 class="mb-4">Employee Management</h1>
+
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Employees</h5>
+                                        <p class="card-text display-4">{{ $totalEmployees }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Active Employees</h5>
+                                        <p class="card-text display-4 text-success">{{ $activeEmployees }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Inactive Employees</h5>
+                                        <p class="card-text display-4 text-danger">{{ $inactiveEmployees }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mt-32">
-
-                            <div class="d-flex align-items-center justify-content-between gap-3 mb-24">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user1.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Dianne Russell</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Employees List</h3>
+                                <div class="card-tools">
+                                    <a href="{{ route('employees.create') }}" class="btn btn-primary float-right">
+                                        <i class="fas fa-plus"></i> Add New Employee
+                                    </a>
                                 </div>
-                                <span class="text-primary-light text-md fw-medium">$20</span>
                             </div>
-
-                            <div class="d-flex align-items-center justify-content-between gap-3 mb-24">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user2.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Wade Warren</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
-                                </div>
-                                <span class="text-primary-light text-md fw-medium">$20</span>
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($employees as $employee)
+                                            <tr>
+                                                <td>{{ $employee->id }}</td>
+                                                <td>{{ $employee->full_name }}</td>
+                                                <td>{{ $employee->email }}</td>
+                                                <td>{{ $employee->department->name ?? 'N/A' }}</td>
+                                                <td>{{ $employee->position }}</td>
+                                                <td>
+                                                    <span
+                                                        class="badge
+                                                        {{ $employee->status == 'active' ? 'badge-success' : 'badge-danger' }}">
+                                                        {{ ucfirst($employee->status) }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('employees.show', $employee) }}"
+                                                        class="btn btn-info btn-sm">View</a>
+                                                    <a href="{{ route('employees.edit', $employee) }}"
+                                                        class="btn btn-warning btn-sm">Edit</a>
+                                                    <form action="{{ route('employees.destroy', $employee) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center">No employees found.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                                {{ $employees->links() }}
                             </div>
-
-                            <div class="d-flex align-items-center justify-content-between gap-3 mb-24">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user3.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Albert Flores</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
-                                </div>
-                                <span class="text-primary-light text-md fw-medium">$30</span>
-                            </div>
-
-                            <div class="d-flex align-items-center justify-content-between gap-3 mb-24">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user4.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Bessie Cooper</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
-                                </div>
-                                <span class="text-primary-light text-md fw-medium">$40</span>
-                            </div>
-
-                            <div class="d-flex align-items-center justify-content-between gap-3 mb-24">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user5.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Arlene McCoy</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
-                                </div>
-                                <span class="text-primary-light text-md fw-medium">$10</span>
-                            </div>
-
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('') }}/images/users/user1.png" alt=""
-                                        class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-md mb-0 fw-medium">Arlene McCoy</h6>
-                                        <span class="text-sm text-secondary-light fw-medium">Agent ID: 36254</span>
-                                    </div>
-                                </div>
-                                <span class="text-primary-light text-md fw-medium">$10</span>
-                            </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1296,7 +1235,7 @@
                                     <div class="max-h-266-px overflow-y-auto scroll-sm pe-16">
                                         <div class="d-flex align-items-center justify-content-between gap-3 mb-12 pb-2">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag1.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag1.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">USA</h6>
@@ -1319,7 +1258,7 @@
 
                                         <div class="d-flex align-items-center justify-content-between gap-3 mb-12 pb-2">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag2.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag2.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">Japan</h6>
@@ -1342,7 +1281,7 @@
 
                                         <div class="d-flex align-items-center justify-content-between gap-3 mb-12 pb-2">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag3.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag3.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">France</h6>
@@ -1365,7 +1304,7 @@
 
                                         <div class="d-flex align-items-center justify-content-between gap-3 mb-12 pb-2">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag4.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag4.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">Germany</h6>
@@ -1388,7 +1327,7 @@
 
                                         <div class="d-flex align-items-center justify-content-between gap-3 mb-12 pb-2">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag5.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag5.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">South Korea</h6>
@@ -1410,7 +1349,7 @@
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between gap-3">
                                             <div class="d-flex align-items-center w-100">
-                                                <img src="{{ asset('') }}/images/flags/flag1.png" alt=""
+                                                <img src="{{ asset('assets1/images/flags/flag1.png') }}" alt=""
                                                     class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12">
                                                 <div class="flex-grow-1">
                                                     <h6 class="text-sm mb-0">USA</h6>
@@ -1480,10 +1419,10 @@
     <footer class="d-footer">
         <div class="row align-items-center justify-content-between">
             <div class="col-auto">
-                <p class="mb-0">© 2024 WowDash. All Rights Reserved.</p>
+                <p class="mb-0">© 2025 FactoryFlow. All Rights Reserved.</p>
             </div>
             <div class="col-auto">
-                <p class="mb-0">Made by <span class="text-primary-600">wowtheme7</span></p>
+                <p class="mb-0">Created by <span class="text-primary-600">Me</span></p>
             </div>
         </div>
     </footer>
